@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Cadastro de Genero</title>
+</h:head>
+<h:body>
+	<p:tabMenu activeIndex="#{param.i}">
+	    <p:menuitem value="Generos" outcome="cadastroGenero.xhtml" icon="pi pi-star">
+	        <f:param name="i" value="0" />
+	    </p:menuitem>
+	    <p:menuitem value="Status" outcome="cadastroStatus.xhtml" icon="pi pi-search">
+	        <f:param name="i" value="1" />
+	    </p:menuitem>
+	    <p:menuitem value="Series" outcome="cadastroSerie.xhtml" icon="pi pi-file">
+	        <f:param name="i" value="2" />
+	    </p:menuitem>
+	</p:tabMenu>
+	
+		<h:form>
+			<p:panel header="Cadastro de Genero" toggleable="true">
+				<p:growl life="200" id="growl" showDetail="true" sticky="true"/>
+				<p:panelGrid columns="2">
+					<h:outputText value="Descrição:* " />
+					<h:inputText value="#{generoController.genero.descricao}"
+						required="true" requiredMessage="Descrição obrigatório" />
+					<p:commandButton ajax="false" value="Salvar" action="#{generoController.salvar}" />
+					<p:commandButton ajax="false" value="Limpar" action="cadastroGenero.xhtml"
+						actionListener="#{generoController.limparCampos}" immediate="true" />
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+		<h:form>
+			<p:panel header="Listagem de Generos" toggleable="true">
+			<p:dataTable value="#{generoController.lista}" var="genero">
+				<p:column headerText="Id">
+					<h:outputText value="#{genero.id}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{genero.descricao}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Ações" />
+					</f:facet>
+					<p:commandButton ajax="false" value="Editar" action="#{generoController.editar}">
+						<f:setPropertyActionListener value="#{genero}"
+							target="#{generoController.genero}" />
+					</p:commandButton>
+					<p:commandButton ajax="false" value="Excluir"
+						action="#{generoController.excluir}">
+						<f:setPropertyActionListener value="#{genero}"
+							target="#{generoController.genero}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			</p:panel>
+		</h:form>
+</h:body>
+</html>

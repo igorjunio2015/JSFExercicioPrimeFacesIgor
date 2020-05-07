@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Cadastro de Status</title>
+</h:head>
+<h:body>
+<p:tabMenu activeIndex="#{param.i}">
+	    <p:menuitem value="Generos" outcome="cadastroGenero.xhtml" icon="pi pi-star">
+	        <f:param name="i" value="0" />
+	    </p:menuitem>
+	    <p:menuitem value="Status" outcome="cadastroStatus.xhtml" icon="pi pi-search">
+	        <f:param name="i" value="1" />
+	    </p:menuitem>
+	    <p:menuitem value="Series" outcome="cadastroSerie.xhtml" icon="pi pi-file">
+	        <f:param name="i" value="2" />
+	    </p:menuitem>
+	</p:tabMenu>
+	<h:form>
+		<h1>Cadastro de Status</h1>
+		<p:growl life="200" id="growl" showDetail="true" sticky="true"/>
+		<h:panelGrid columns="2">
+			<h:outputText value="Descrição:* " />
+			<h:inputText value="#{statusController.status.descricao}"
+				required="true" requiredMessage="Descrição obrigatório" />
+			<h:commandButton value="Salvar" action="#{statusController.salvar}" />
+			<h:commandButton value="Limpar" action="cadastroStatus.xhtml"
+				actionListener="#{statusController.limparCampos}" immediate="true" />
+		</h:panelGrid>
+	</h:form>
+	<h:form>
+		<h1>Lista de Status</h1>
+		<h:dataTable value="#{statusController.lista}" var="status" border="1">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Id" />
+				</f:facet>
+				<h:outputText value="#{status.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Descrição" />
+				</f:facet>
+				<h:outputText value="#{status.descricao}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<h:commandButton value="Editar" action="#{statusController.editar}">
+					<f:setPropertyActionListener value="#{status}"
+						target="#{statusController.status}" />
+				</h:commandButton>
+				<h:commandButton value="Excluir"
+					action="#{statusController.excluir}">
+					<f:setPropertyActionListener value="#{status}"
+						target="#{statusController.status}" />
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html>
